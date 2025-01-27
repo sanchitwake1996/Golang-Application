@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.19
+    commands:
+      - echo "Installing dependencies..."
+      - go mod init myapp
+      - go get
+  build:
+    commands:
+      - echo "Building Go application..."
+      - go build -o myapp
+  post_build:
+    commands:
+      - echo "Build completed successfully!"
+artifacts:
+  files:
+    - myapp
+    - '**/*.go'
