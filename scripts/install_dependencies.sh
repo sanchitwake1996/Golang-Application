@@ -1,9 +1,14 @@
 #!/bin/bash
-set -e
+set -e  # Exit immediately if a command exits with a non-zero status
+set -x  # Print commands for debugging
 
-echo "Updating packages and installing dependencies..."
-sudo apt update -y
-sudo apt install -y golang
+echo "Updating package lists..."
+sudo apt update -y || { echo "Failed to update packages"; exit 1; }
 
-echo "Ensuring executable permissions..."
-chmod +x /home/ubuntu/myapp/myapp
+echo "Installing Go..."
+sudo apt install -y golang || { echo "Failed to install Go"; exit 1; }
+
+echo "Setting permissions for the Go application..."
+chmod +x /home/ubuntu/myapp/myapp || { echo "Failed to set executable permissions"; exit 1; }
+
+echo "Dependencies installed successfully!"
