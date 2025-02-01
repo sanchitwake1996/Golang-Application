@@ -5,7 +5,8 @@ phases:
     runtime-versions:
       golang: 1.19
     commands:
-      - echo "Installing dependencies..."
+      - echo "Initializing Go module..."
+      - go mod init myapp || true  # Ensures module exists
       - go mod tidy
   build:
     commands:
@@ -22,3 +23,4 @@ artifacts:
     - scripts/*
     - '**/*.go'
   discard-paths: no
+
