@@ -12,10 +12,9 @@ phases:
     commands:
       - echo "Building Go application..."
       - go build -o myapp
-  post_build:
-    commands:
-      - echo "Build completed successfully!"
-      - chmod +x myapp
+post_build:
+  commands:
+    - chmod +x scripts/*.sh
 artifacts:
   files:
     - myapp
