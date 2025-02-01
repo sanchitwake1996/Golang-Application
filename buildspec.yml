@@ -1,25 +1,25 @@
-version: 0.2
-
-phases:
-  install:
-    runtime-versions:
-      golang: 1.19
-    commands:
-      - echo "Initializing Go module..."
-      - go mod init myapp || true  # Ensures module exists
-      - go mod tidy
-  build:
-    commands:
-      - echo "Building Go application..."
-      - go build -o myapp
-post_build:
-  commands:
-    - chmod +x scripts/*.sh
-artifacts:
-  files:
-    - myapp
-    - appspec.yml
-    - scripts/*
-    - '**/*.go'
-  discard-paths: no
+version: 0.0
+os: linux
+files:
+  - source: .
+    destination: /home/ubuntu/myapp
+permissions:
+  - object: /home/ubuntu/myapp/scripts/
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: ubuntu
 
