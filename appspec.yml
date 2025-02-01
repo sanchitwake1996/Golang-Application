@@ -3,6 +3,12 @@ os: linux
 files:
   - source: .
     destination: /home/ubuntu/myapp
+permissions:
+  - object: /home/ubuntu/myapp/scripts/
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies.sh
