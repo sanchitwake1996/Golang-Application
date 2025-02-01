@@ -6,8 +6,7 @@ phases:
       golang: 1.19
     commands:
       - echo "Installing dependencies..."
-      - go mod init myapp
-      - go get
+      - go mod tidy
   build:
     commands:
       - echo "Building Go application..."
@@ -15,7 +14,11 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
+      - chmod +x myapp
 artifacts:
   files:
     - myapp
+    - appspec.yml
+    - scripts/*
     - '**/*.go'
+  discard-paths: no
