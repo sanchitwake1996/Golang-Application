@@ -1,25 +1,13 @@
-#!/bin/bash
-set -e
-set -x
-
-# Wait until the lock is released
-while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-  echo "Waiting for dpkg lock to be released..."
-  sleep 5
-done
-
-echo "Updating package lists..."
-sudo apt update -y || { echo "Failed to update packages"; exit 1; }
-
-echo "Installing Go..."
-sudo apt install -y golang || { echo "Failed to install Go"; exit 1; }
-
 echo "Checking if myapp exists..."
 if [ -f "/home/ubuntu/myapp/myapp" ]; then
+  echo "Fixing ownership of myapp..."
+  sudo chown ubuntu:ubuntu /home/ubuntu/myapp/myapp || { echo "Failed to change ownership"; exit 1; }
+  
+  echo "Removing immutable attribute (if exists)..."
+  sudo chattr -i /home/ubuntu/myapp/myapp || echo "No immutable attribute set"
+
   echo "Setting executable permissions..."
-  chmod +x /home/ubuntu/myapp/myapp || { echo "Failed to set executable permissions"; exit 1; }
+  sudo chmod +x /home/ubuntu/myapp/myapp || { echo "Failed to set executable permissions"; exit 1; }
 else
   echo "Warning: myapp file not found, skipping chmod"
 fi
-
-echo "Dependencies installed successfully!"
