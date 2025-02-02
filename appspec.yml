@@ -18,6 +18,9 @@ hooks:
     - location: scripts/set_permissions.sh
       timeout: 300
       runas: root
+    - location: scripts/rebuild_and_restart.sh  # New script to rebuild and restart
+      timeout: 300
+      runas: root
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 300
