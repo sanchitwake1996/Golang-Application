@@ -2,6 +2,12 @@
 set -e
 set -x
 
+# Wait until the lock is released
+while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+  echo "Waiting for dpkg lock to be released..."
+  sleep 5
+done
+
 echo "Updating package lists..."
 sudo apt update -y || { echo "Failed to update packages"; exit 1; }
 
