@@ -6,7 +6,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello from AWS CodeBuild using Go by developer sanchit!")
+	fmt.Fprintf(w, "Hello from AWS Code Pipeline using Go by developer sanchit wake!")
 }
 
 func main() {
